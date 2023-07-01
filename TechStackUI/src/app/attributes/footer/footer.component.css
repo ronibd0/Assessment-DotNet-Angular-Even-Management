@@ -1,0 +1,9 @@
+/* footer.component.css */
+.container {
+    justify-content: flex-end;
+  }
+  
+  .navbar-text {
+    color: #fff;
+  }
+  

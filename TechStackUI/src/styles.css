@@ -1,0 +1,20 @@
+/* You can add global styles to this file, and also import other style files */
+@import '~bootstrap/dist/css/bootstrap.css';
+
+/* styles.css */
+.modal-dialog {
+    max-width: 500px;
+  }
+  
+  .modal-content {
+    padding: 20px;
+  }
+  
+  .modal-body {
+    padding-bottom: 0;
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+  }
+  

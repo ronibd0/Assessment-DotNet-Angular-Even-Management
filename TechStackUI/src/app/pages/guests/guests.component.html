@@ -1,0 +1,172 @@
+<!-- guest-list.component.html -->
+<div class="container-fluid">
+  <div class="card">
+    <div class="card-header">
+      <div class="row">
+        <div class="col-lg-4 col-md-4 col-sm-12">
+          <h3>Guest List</h3>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-12"></div>
+        <div class="col-lg-2 col-md-2 col-sm-12">
+          <button
+            id="openbtn"
+            type="button"
+            class="btn btn-primary"
+            data-bs-toggle="modal"
+            data-bs-target="#staticBackdrop"
+            (click)="openmodel()"
+          >
+            Add new Guest
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div
+        class="modal fade"
+        id="staticBackdrop"
+        data-bs-backdrop="static"
+        data-bs-keyboard="false"
+        tabindex="-1"
+        aria-labelledby="staticBackdropLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="staticBackdropLabel">Add Guest</h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+                (click)="guestForm.reset()"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <form [formGroup]="guestForm">
+                <div class="form-group">
+                  <label for="firstName">First Name</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="firstName"
+                    formControlName="firstName"
+                    required
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="lastName">Last Name</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="lastName"
+                    formControlName="lastName"
+                    required
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="email">Email</label>
+                  <input
+                    type="email"
+                    class="form-control"
+                    id="email"
+                    formControlName="email"
+                    required
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="dateOfBirth">Date of Birth</label>
+                  <input
+                    type="date"
+                    class="form-control"
+                    id="dateOfBirth"
+                    formControlName="dob"
+                    required
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="allergies">Allergies</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="allergies"
+                    formControlName="allergies"
+                  />
+                </div>
+                <div class="modal-footer">
+                  <button
+                    id="closebtn"
+                    type="button"
+                    class="btn btn-secondary"
+                    data-bs-dismiss="modal"
+                    (click)="reset()"
+                  >
+                    Close
+                  </button>
+                  <button
+                    *ngIf="!updatebtn"
+                    type="submit"
+                    class="btn btn-primary"
+                    [disabled]="guestForm.invalid"
+                    (click)="onSubmit()"
+                  >
+                    Add Guest
+                  </button>
+                  <button
+                    *ngIf="updatebtn"
+                    type="submit"
+                    class="btn btn-warning"
+                    (click)="Updateguest()"
+                  >
+                    Update guest
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="table-responsive">
+      <table class="table table-responsive">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">First Name</th>
+            <th scope="col">Last Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Date of Birth</th>
+            <th scope="col">Allergies</th>
+            <th>
+              Action
+
+            </th>
+          </tr>
+        </thead>
+
+        <tbody>
+
+
+          <tr *ngFor="let i of guest; let in = index">
+            <th scope="row">{{ in +1}}</th>
+            <td>{{ i.firstName }}</td>
+            <td>{{ i.lastName }}</td>
+            <td>{{ i.email }}</td>
+            <td>{{ i.dob | date }}</td>
+            <td>{{ i.allergies }}</td>
+            <td>
+              <button class="btn btn-primary mx-2" (click)="editGuest(i)">
+                Edit
+              </button>
+              <button class="btn btn-danger" (click)="deleteGuest(i)">
+                Delete
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+</div>

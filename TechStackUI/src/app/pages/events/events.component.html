@@ -1,0 +1,166 @@
+<!-- guest-list.component.html -->
+<div class="container-fluid">
+  <div class="card">
+    <div class="card-header">
+      <div class="row">
+        <div class="col-lg-4 col-md-4 col-sm-12"><h3>Event List</h3></div>
+        <div class="col-lg-6 col-md-6 col-sm-12"></div>
+        <div class="col-lg-2 col-md-2 col-sm-12">
+          <button
+            id="openbtn"
+            type="button"
+            class="btn btn-primary"
+            data-bs-toggle="modal"
+            data-bs-target="#staticBackdrop"
+          >
+            Add new Event
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-body">
+      <div
+        class="modal fade"
+        id="staticBackdrop"
+        data-bs-backdrop="static"
+        data-bs-keyboard="false"
+        tabindex="-1"
+        aria-labelledby="staticBackdropLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="staticBackdropLabel">Add event</h5>
+              <button
+                id="closebtn"
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <form [formGroup]="eventForm">
+                <div class="form-group">
+                  <label for="eventName">Event Name</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="eventName"
+                    formControlName="eventName"
+                    required
+                  />
+                  <div *ngIf="eventName.invalid && eventName.touched">
+                    <div *ngIf="eventName.errors" class="text-danger">Name is required.</div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="eventDate">Event Date</label>
+                  <input
+                    type="date"
+                    class="form-control"
+                    id="eventDate"
+                    formControlName="eventDate"
+                    required
+                  />
+                  <div *ngIf="eventDate.invalid && eventDate.touched">
+                    <div *ngIf="eventDate.errors" class="text-danger">Date is required.</div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <h6>Guests list</h6>
+                  <ul class="text-decoration-none">
+                    <li *ngFor="let item of guestList" class="py-1" >
+                      <label>
+                        <input
+                          type="checkbox"
+                          [value]="item"
+                          (change)="selectItem($event.target, item)"
+                        />
+                        {{ item.firstName + " " + item.lastName }}
+                      </label>
+                    </li>
+                  </ul>
+                  <div *ngIf="guestNamevalid <2">
+                    <div   class="text-danger">Atleast two  guest required.</div>
+                  </div>
+                  <h6>Selected guests</h6>
+                  <ul>
+                    <li *ngFor="let item of selectedList">
+                      {{ item.name }}
+
+                    </li>
+                  </ul>
+
+                </div>
+                <div class="modal-footer">
+                  <button
+                    id="closebtn"
+                    type="button"
+                    class="btn btn-secondary"
+                    data-bs-dismiss="modal"
+                    (click)="reset()"
+                  >
+                    Close
+                  </button>
+                  <button
+                  *ngIf="!updatebtn"
+                    type="submit"
+                    [disabled]="eventForm.invalid"
+                    class="btn btn-primary"
+                    (click)="onSubmit()"
+                  >
+                    Add event
+                  </button>
+                  <button
+                    *ngIf="updatebtn"
+                    type="submit"
+                    class="btn btn-primary"
+                    (click)="Updateevet()"
+                  >
+                    Update event
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>EventName</th>
+              <th>Event Date</th>
+              <th>Name of Guests</th>
+
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let e of event">
+              <td>{{ e.eventName }}</td>
+              <td>{{ e.eventDate | date }}</td>
+              <td>
+                <div *ngFor="let item of parseData(e.listOfGuest)">
+                  <dd>{{ item.name }},</dd>
+                </div>
+              </td>
+
+              <td>
+                <button class="btn btn-primary mx-2" (click)="editEvent(e)">
+                  Edit
+                </button>
+                <button class="btn btn-danger" (click)="deleteEvent(e)">
+                  Delete
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

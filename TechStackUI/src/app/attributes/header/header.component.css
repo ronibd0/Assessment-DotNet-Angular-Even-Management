@@ -1,0 +1,6 @@
+/* header.component.css */
+.navbar-nav .nav-item .nav-link.active:hover {
+    color: #fff;
+    background-color: #343a40;
+  }
+  
